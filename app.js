@@ -216,17 +216,19 @@ function buildCategories() {
             }
     });
 
-    classGroups = { '一年級': [], '二年級': [], '三年級': [], '四至六年級': [] };
+    classGroups = { '一年級': [], '二年級': [], '三年級': [], '四年級': [], '五年級': [], '六年級': [] };
     [...allClasses].sort().forEach(cls => {
         if      (/^1\d+$/.test(cls)) classGroups['一年級'].push(cls);
         else if (/^2\d+$/.test(cls)) classGroups['二年級'].push(cls);
         else if (/^3\d+$/.test(cls)) classGroups['三年級'].push(cls);
-        else classGroups['四至六年級'].push(cls);
+        else if (/^4\d+$/.test(cls)) classGroups['四年級'].push(cls);
+        else if (/^5\d+$/.test(cls)) classGroups['五年級'].push(cls);
+        else classGroups['六年級'].push(cls);
     });
-    ['一年級','二年級','三年級'].forEach(g => {
+    ['一年級','二年級','三年級','四年級','五年級'].forEach(g => {
         classGroups[g].sort((a, b) => parseInt(a) - parseInt(b));
     });
-    classGroups['四至六年級'].sort();
+    classGroups['六年級'].sort();
 
     // ── 科目→教師分類（含早自習）──
     subjectTeachers = {};
@@ -256,6 +258,8 @@ function populateQueryUI() {
     populateGradeSelect('sel7',  classGroups['一年級']);
     populateGradeSelect('sel8',  classGroups['二年級']);
     populateGradeSelect('sel9',  classGroups['三年級']);
+    populateGradeSelect('se20',  classGroups['四年級']);
+    populateGradeSelect('se21',  classGroups['五年級']);
     populateGradeSelect('selSp', classGroups['四至六年級']);
 
     const subjectSel = document.getElementById('subjectSelect');
